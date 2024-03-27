@@ -1,0 +1,333 @@
+html {
+  font-family: sans-serif;
+  color: #333;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+p, h1 {
+  margin: 0;
+}
+
+.disable {
+  pointer-events: none;
+}
+
+.btn {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 10px 40px;
+  margin: 0 auto;
+  max-width: 1800px;
+}
+
+.title {
+  align-self: center;
+  margin-bottom: 20px;
+  font-size: 40px;
+  text-align: center;
+}
+
+.form {
+  position: absolute;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 50px;
+  width: fit-content;
+  border-radius: 20px;
+  border: 1px solid blue;
+  font-size: 20px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  translate: -50% 0;
+  scale: 0;
+  transition: opacity .5s ease-in-out, scale 1s ease-in-out, visibility 0s .5s;
+}
+
+.form.form--visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+  scale: 1;
+  transition: opacity .5s ease-in-out, scale 1s ease-in-out;
+}
+
+.form__text {
+  margin-bottom: 20px;
+  font-size: 1.3em;
+}
+
+.form__label {
+  margin-bottom: 20px;
+}
+
+.form__label:last-of-type {
+  margin-bottom: 40px;
+}
+
+.form__label span{
+  margin-bottom: 5px;
+  display: block;
+}
+
+.form__radio {
+  cursor: pointer;
+}
+
+.form__input {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #333;
+  outline: none;
+  transition: border-color .3s ease-in-out, box-shadow .3s ease-in-out;
+}
+
+.form__input:hover {
+  box-shadow: 0 0 5px 0px lightskyblue;
+}
+
+.form__input:focus-visible {
+  border-color: blue;
+  box-shadow: 0 0 5px 0px blue;
+}
+
+.form__input:active {
+  border-color: blue;
+  box-shadow: 0 0 5px 0px blue;
+}
+
+.form__input.form__input--error {
+  border-color: red;
+  box-shadow: 0 0 5px 0px red;
+}
+
+.form__btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 3px solid transparent;
+  color: white;
+  background-color: blue;
+  transition:  border-color .3s ease-in-out, background-color .3s ease-in-out;
+}
+
+.form__btn:hover {
+  background-color: darkblue;
+}
+
+.form__btn:focus-visible {
+  border-color: darkblue;
+}
+
+.form__btn:active {
+  transform: scale(.95, .95);
+}
+
+.field {
+  display: grid;
+  gap: 10px;
+  margin: 0 auto 10px;
+  min-width: 500px;
+  min-height: 500px;
+  aspect-ratio: 1 / 1;
+  opacity: 0;
+  animation: appear 1s ease-in-out forwards 1 .5s;
+}
+
+.field__item {
+  position: relative;
+  border-radius: 10px;
+  line-height: 125%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.field__item-front,
+.field__item-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition: transform .5s ease-in-out;
+}
+
+.field__item-front-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.field__item-back {
+  border: 2px solid blue;
+  background-image: url("../img/back.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.field__item-front {
+  border: 2px solid blue;
+  background-color: white;
+  transform: perspective(600px) rotateY(-180deg);
+}
+
+.field__item-back {
+  transform: perspective(600px) rotateY(0deg);
+}
+
+.field__item.field__item--open {
+  pointer-events: none;
+}
+
+.field__item--open .field__item-front {
+  transform: perspective(600px) rotateY(0deg);
+}
+
+.field__item--open .field__item-back {
+  transform: perspective(600px) rotateY(180deg);
+}
+
+.field__item--hit .field__item-front {
+  animation: hit 1s ease-in-out forwards 1 .5s;
+}
+
+.field__item--fail .field__item-front {
+  animation: fail 1s ease-in-out forwards 1 .5s;
+}
+
+.timer {
+  position: absolute;
+  right: 50px;
+  bottom: -35px;
+  width: 80px;
+  height: 50px;
+  border-radius: 10px;
+  border: 2px solid blue;
+  font-size: 40px;
+  line-height: 50px;
+  text-align: center;
+  opacity: 0;
+  animation: appear 1s ease-in-out forwards 1 .5s;
+}
+
+.timer.timer--running-out {
+  border-color: red;
+  opacity: 1;
+  animation: runningOut 1s ease-in-out forwards infinite;
+}
+
+.timer.timer--end {
+  border-color: red;
+  opacity: 1;
+  animation: none;
+}
+
+.try-again-btn {
+  position: absolute;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 3px solid transparent;
+  font-size: 20px;
+  color: white;
+  background-color: blue;
+  opacity: 0;
+  transition:  border-color .3s ease-in-out, background-color .3s ease-in-out;
+}
+
+.try-again-btn.try-again-btn--active {
+  opacity: 1;
+  transition: opacity .5s ease-in-out;
+}
+
+.try-again-btn:hover {
+  background-color: darkblue;
+}
+
+.try-again-btn:focus-visible {
+  border-color: darkblue;
+}
+
+.try-again-btn:active {
+  transform: scale(.95, .95);
+}
+
+@keyframes hit {
+
+  0% {
+    border-color: greenyellow;
+    box-shadow: 0 0 0px 0px transparent;
+  }
+
+  50% {
+    border-color: greenyellow;
+    box-shadow: 0 0 20px 0px greenyellow;
+  }
+
+  100% {
+    border-color: greenyellow;
+    box-shadow: 0 0 0px 0px transparent;
+  }
+
+}
+
+@keyframes fail {
+
+  0% {
+    border-color: red;
+    box-shadow: 0 0 0 0 transparent;
+  }
+
+  50% {
+    border-color: red;
+    box-shadow: 0 0 20px 0 red;
+  }
+
+  100% {
+    border-color: red;
+    box-shadow: 0 0 0 0 transparent;
+  }
+
+}
+
+@keyframes appear {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+@keyframes runningOut {
+
+  0% {
+    box-shadow: 0 0 10px 2px red;
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+
+}
